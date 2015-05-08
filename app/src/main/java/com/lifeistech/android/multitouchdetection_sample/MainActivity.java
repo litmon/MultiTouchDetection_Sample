@@ -1,5 +1,6 @@
 package com.lifeistech.android.multitouchdetection_sample;
 
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +30,17 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
+            int pointerIndex = ((event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT);
+
             writeLog("actionPointerCount: " + event.getPointerCount());
-            writeLog("actionIndex: " + event.getActionIndex());
-            writeLog("actionName: " + actionToString(event.getAction()));
+            writeLog("actionName: " + actionToString(event.getAction() & MotionEvent.ACTION_MASK));
+
+            for(int i = 0, n = event.getPointerCount(); 1 < n && i < n; i++){
+                int id = event.getPointerId(i);
+                writeLog("actionPointerId: " + id);
+                writeLog("actionPointerX: " + MotionEventCompat.getX(event, id));
+                writeLog("actionPointerY: " + MotionEventCompat.getY(event, id));
+            }
 
             return true;
         }

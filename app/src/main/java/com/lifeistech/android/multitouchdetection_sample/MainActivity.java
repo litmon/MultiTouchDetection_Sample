@@ -1,5 +1,6 @@
 package com.lifeistech.android.multitouchdetection_sample;
 
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -41,35 +42,19 @@ public class MainActivity extends ActionBarActivity {
     View.OnTouchListener mDetectListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-
-            int pointerIndex = ((event.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT);
-
             actionNameView.setText("actionName: " + actionToString(event.getActionMasked()));
-
-            if (event.getPointerCount() > 1) {
-                writeLog("actionPointerX: " + MotionEventCompat.getX(event, 1));
-                writeLog("actionPointerY: " + MotionEventCompat.getY(event, 1));
-            }
-
-            actionMasked = event.getActionMasked();
-
-            gestureDetector.onTouchEvent(event);
-
-            return true;
+            return gestureDetector.onTouchEvent(event);
         }
     };
 
-    public int actionMasked;
-
     GestureDetector gestureDetector;
     GestureDetector.OnGestureListener gestureListener = new GestureDetector.OnGestureListener() {
-
 
         @Override
         public boolean onDown(MotionEvent e) {
             resultView.setText("onDown");
 
-            return false;
+            return true;
         }
 
         @Override
@@ -82,9 +67,11 @@ public class MainActivity extends ActionBarActivity {
         public boolean onSingleTapUp(MotionEvent e) {
             resultView.setText("onSingleTapUp");
 
-            return false;
+            return true;
         }
 
+
+        int flingCount = 0;
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             // resultView.setText("onScroll");
@@ -92,14 +79,17 @@ public class MainActivity extends ActionBarActivity {
                 resultView.setText("onScroll dX: " + String.format("%.2f", distanceX) + ", dY: " + String.format("%.2f", distanceY));
                 movePointView.setText("X: " + e2.getX(1) + ", Y: " + e2.getY(1));
 
-                if (distanceX < -20) {
-                    e2ActionNameView.setText("onFling dX: "
+                if (distanceX < -20 && Math.abs(distanceY) < 20) {
+                    flingCount++;
+                    e2ActionNameView.setText("onFling" + flingCount + " dX: "
                             + String.format("%.2f", distanceX)
                             + ", dY: "
                             + String.format("%.2f", distanceY));
+
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
 
         @Override
@@ -116,7 +106,7 @@ public class MainActivity extends ActionBarActivity {
 
             resultView.setText("onFling");
 
-            return false;
+            return true;
         }
     };
 

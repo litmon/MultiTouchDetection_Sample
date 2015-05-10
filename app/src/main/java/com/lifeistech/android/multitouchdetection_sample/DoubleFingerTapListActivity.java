@@ -1,6 +1,7 @@
 package com.lifeistech.android.multitouchdetection_sample;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +10,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import in.championswimmer.sfg.lib.SimpleFingerGestures;
 
@@ -35,6 +38,13 @@ public class DoubleFingerTapListActivity extends ActionBarActivity {
         adapter.add(new Item("printf(\"hello world!\")"));
         adapter.add(new Item("return 0;"));
         adapter.add(new Item("}"));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "onItemClick " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -83,12 +93,22 @@ public class DoubleFingerTapListActivity extends ActionBarActivity {
             @Override
             public boolean onSwipeLeft(int fingers, long gestureDuration) {
                 v.setText("onSwipeLeft fingers: " + fingers);
+
+                if (fingers == 2){
+                    ((View)v.getParent()).setBackgroundColor(Color.rgb(255, 255, 255));
+                }
+
                 return false;
             }
 
             @Override
             public boolean onSwipeRight(int fingers, long gestureDuration) {
                 v.setText("onSwipeRight fingers: " + fingers);
+
+                if (fingers == 2){
+                    ((View)v.getParent()).setBackgroundColor(Color.rgb(0, 255, 0));
+                }
+
                 return false;
             }
 

@@ -60,12 +60,14 @@ public class DoubleFingerTapListActivity extends ActionBarActivity {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_list_item, null);
             }
 
+            getItem(position).bind(convertView);
+
             SimpleFingerGestures gestures = new SimpleFingerGestures();
             gestures.setDebug(true);
             gestures.setConsumeTouchEvents(true);
 
             convertView.setOnTouchListener(gestures);
-            gestures.setOnFingerGestureListener(new OnSwipeGestureListener((TextView)convertView.findViewById(R.id.content)));
+            gestures.setOnFingerGestureListener(new OnSwipeGestureListener((TextView) convertView.findViewById(R.id.content)));
 
             return convertView;
         }
@@ -74,53 +76,43 @@ public class DoubleFingerTapListActivity extends ActionBarActivity {
 
             TextView v;
 
-            public OnSwipeGestureListener(TextView v){
+            public OnSwipeGestureListener(TextView v) {
                 this.v = v;
             }
 
             @Override
             public boolean onSwipeUp(int fingers, long gestureDuration) {
-                v.setText("onSwipeUp fingers: " + fingers);
                 return false;
             }
 
             @Override
             public boolean onSwipeDown(int fingers, long gestureDuration) {
-                v.setText("onSwipeDown fingers: " + fingers);
                 return false;
             }
 
             @Override
             public boolean onSwipeLeft(int fingers, long gestureDuration) {
-                v.setText("onSwipeLeft fingers: " + fingers);
 
-                if (fingers == 2){
-                    ((View)v.getParent()).setBackgroundColor(Color.rgb(255, 255, 255));
-                }
+                ((View) v.getParent()).setBackgroundColor(Color.rgb(255, 255, 255));
 
                 return false;
             }
 
             @Override
             public boolean onSwipeRight(int fingers, long gestureDuration) {
-                v.setText("onSwipeRight fingers: " + fingers);
 
-                if (fingers == 2){
-                    ((View)v.getParent()).setBackgroundColor(Color.rgb(0, 255, 0));
-                }
+                ((View) v.getParent()).setBackgroundColor(Color.rgb(0, 255, 0));
 
                 return false;
             }
 
             @Override
             public boolean onPinch(int fingers, long gestureDuration) {
-                v.setText("onPinch fingers: " + fingers);
                 return false;
             }
 
             @Override
             public boolean onUnpinch(int fingers, long gestureDuration) {
-                v.setText("onUnpinch fingers: " + fingers);
                 return false;
             }
         }

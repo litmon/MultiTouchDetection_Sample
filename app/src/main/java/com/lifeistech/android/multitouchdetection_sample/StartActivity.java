@@ -22,7 +22,6 @@ public class StartActivity extends ActionBarActivity {
 
     public void startListActivity(View v){
         startActivity(new Intent(this, DoubleFingerTapListActivity.class));
-
     }
 
 }

@@ -24,4 +24,8 @@ public class StartActivity extends ActionBarActivity {
         startActivity(new Intent(this, DoubleFingerTapListActivity.class));
     }
 
+    public void startSwipeListActivity(View v){
+        startActivity(new Intent(this, SwipeListViewActivity.class));
+    }
+
 }

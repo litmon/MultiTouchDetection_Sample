@@ -18,13 +18,15 @@
         <activity
             android:name=".StartActivity"
             android:label="@string/title_activity_start" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".SwipeListViewActivity"
+            android:label="@string/title_activity_swipe_list_view" >
         </activity>
     </application>
 

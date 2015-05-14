@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 public class SwipeListViewActivity extends ActionBarActivity {
 
+    // 全然作業できない……うごごごごごごごごごごごごごごごｇ
+
     ListView listView;
     ArrayAdapter<Item> adapter;
 
